@@ -23,6 +23,10 @@ def clean_data(df):
     categories = df.categories.str.split(';', expand=True)
     categories.columns = cols
     
+    # Replace value '2' in column 'related' by '0' and drop child_alone
+    categories['related'] = categories['related'].str.replace('related-2', 'related-0')
+    categories.drop(['child_alone'], axis=1, inplace=True)
+    
     # Convert strings into numerical values
     for column in categories:
         categories[column] = categories[column].str.slice(-1)
