@@ -11,19 +11,17 @@ Machine learning pipeline to categorize messages for disaster response.
 
 ## Installation <a name="installation"></a>
 
-All the requirements needed can be found in [requirements.txt](https://github.com/MercedesTerragno/Buenos-Aires-Airbnb-Analysis/blob/main/requirements.txt)
+All the requirements needed can be found in [requirements.txt]()
 
 ## File Descriptions <a name="files"></a>
 
 [](): 
 
-The dataset used can be downloaded [here]().
 
 ## Project Motivation <a name="motivation"></a>
 
 
 ## Results <a name="results"></a>
-
 
 
 ## Acknowledgements <a name="acknowledgements"></a>
