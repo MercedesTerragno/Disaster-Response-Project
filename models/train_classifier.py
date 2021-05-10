@@ -57,7 +57,12 @@ def build_model():
     ('clf', MultiOutputClassifier(classifier, n_jobs=-1))
 ])
     
-    return pipeline
+    params = {'clf__estimator__C': [0.05, 0.1, 0.5]}
+
+    grid_search = GridSearchCV(pipeline, cv=3, param_grid= params, n_jobs=-1, 
+                               scoring= 'f1_weighted', verbose=3)
+    
+    return grid_search
 
 def evaluate_model(model, X_test, Y_test, category_names):
     Y_pred = model.predict(X_test)
