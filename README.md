@@ -25,7 +25,7 @@ This project involves a web app where you can input a new message and get a clas
   - disaster_messages.csv: Csv file with "id", "message", "original" and "genre" as columns.
   - disaster_categories.csv: Csv file with "id" and "categories" as columns.
   - DisasterResponse.db: Database created by process_data.py with cleaned data.
-  -  
+  
 - Models
   - train_classifier.py: Python script to load data from the SQL database, train a classification model and save it as a pickle file.
 
