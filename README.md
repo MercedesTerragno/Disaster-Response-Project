@@ -4,19 +4,14 @@ Machine learning pipeline to categorize messages for disaster response.
 ### Table of Contents
 
 1. [Project Motivation](#motivation)
-2. [Web Application Screenshots](#screenshots)
-3. [File Descriptions](#files)
-4. [Usage](#usage)
-5. [Acknowledgements](#acknowledgements)
+2. [File Descriptions](#files)
+3. [Usage](#usage)
+4. [Acknowledgements](#acknowledgements)
 
 ## Project Motivation <a name="motivation"></a>
 
 Following a disaster, typically you get millions of communications right at the time when disaster response organizations have the least capacity to filter and pull out the messages that are the most important for an appropiate response. Different organizations take care of different parts of the problem.
 This project involves a web app where you can input a new message and get a classification result in several categories, such as "food", "shelter" and "medical aid". Therefore it serves as a way to classify the information, in order to refer it to the corresponding response organization. The web app also displays a visualization of the data. 
-
-## Web application screenshots <a name="screenshots"></a>
-
-
 
 ## File Descriptions <a name="files"></a>
 
