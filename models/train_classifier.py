@@ -50,19 +50,24 @@ def tokenize(text):
 
 
 def build_model():
-    classifier = LinearSVC(C=0.1, dual=False, class_weight='balanced')
-    
-    pipeline = Pipeline([
-    ('tfidf', TfidfVectorizer(tokenizer= tokenize, stop_words= 'english')),
-    ('clf', MultiOutputClassifier(classifier, n_jobs=-1))
-])
-    
-    params = {'clf__estimator__C': [0.05, 0.1, 0.5]}
+        
+    model = AdaBoostClassifier(n_estimators= 20, learning_rate= 1.2)
 
-    grid_search = GridSearchCV(pipeline, cv=3, param_grid= params, n_jobs=-1, 
-                               scoring= 'f1_weighted', verbose=3)
-    
+    pipeline = Pipeline([
+        ('vect', CountVectorizer(tokenizer=tokenize, max_df = 0.75)),
+        ('tfidf', TfidfTransformer()),
+        ('clf', MultiOutputClassifier(model))
+    ])
+
+    parameters = {'clf__estimator__n_estimators': [10, 20] }
+#                   'clf__estimator__learning_rate': [1.2, 1.3]}
+
+
+    grid_search = GridSearchCV(pipeline, cv=3, param_grid=parameters, scoring='f1_macro', 
+                      verbose=2, n_jobs=2)
+
     return grid_search
+
 
 def evaluate_model(model, X_test, Y_test, category_names):
     Y_pred = model.predict(X_test)
