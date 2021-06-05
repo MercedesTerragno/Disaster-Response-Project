@@ -4,6 +4,7 @@ from sqlalchemy import create_engine
 import re
 import nltk
 nltk.download(['wordnet', 'stopwords'])
+from nltk.corpus import stopwords
 from nltk.stem.wordnet import WordNetLemmatizer
 from nltk.tokenize import word_tokenize
 from sklearn.pipeline import Pipeline
@@ -41,7 +42,8 @@ def tokenize(text):
     
     # strip whitespaces and lemmatize
     lemmatizer = WordNetLemmatizer()
-    tokens = [lemmatizer.lemmatize(w.strip()) for w in tokens]
+    stop_words = stopwords.words("english")
+    tokens = [lemmatizer.lemmatize(w.strip()) for w in tokens if w not in stop_words]
 
     # drop duplicates
     tokens = pd.Series(tokens).drop_duplicates().tolist()
@@ -50,23 +52,39 @@ def tokenize(text):
 
 
 def build_model():
-        
-    model = AdaBoostClassifier(n_estimators= 20, learning_rate= 1.2)
+    
+    
+    model = RandomForestClassifier()
 
     pipeline = Pipeline([
-        ('vect', CountVectorizer(tokenizer=tokenize, max_df = 0.75)),
+        ('vect', CountVectorizer(tokenizer=tokenize, max_df= 0.75)),
         ('tfidf', TfidfTransformer()),
-        ('clf', MultiOutputClassifier(model))
+        ('clf', MultiOutputClassifier(model, n_jobs=-1))
     ])
 
-    parameters = {'clf__estimator__n_estimators': [10, 20] }
-#                   'clf__estimator__learning_rate': [1.2, 1.3]}
+    parameters = {'clf__estimator__n_estimators' : [30, 50, 100]}
 
 
-    grid_search = GridSearchCV(pipeline, cv=3, param_grid=parameters, scoring='f1_macro', 
-                      verbose=2, n_jobs=2)
+    cv = GridSearchCV(pipeline, cv= 2, param_grid= parameters, verbose= 3)
 
-    return grid_search
+    return cv   
+    
+#     model = AdaBoostClassifier(n_estimators= 20, learning_rate= 1.2)
+
+#     pipeline = Pipeline([
+#         ('vect', CountVectorizer(tokenizer=tokenize, max_df = 0.75)),
+#         ('tfidf', TfidfTransformer()),
+#         ('clf', MultiOutputClassifier(model))
+#     ])
+
+#     parameters = {'clf__estimator__n_estimators': [10, 20] }
+# #                   'clf__estimator__learning_rate': [1.2, 1.3]}
+
+
+#     grid_search = GridSearchCV(pipeline, cv=3, param_grid=parameters, scoring='f1_macro', 
+#                       verbose=2, n_jobs=2)
+
+#     return grid_search
 
 
 def evaluate_model(model, X_test, Y_test, category_names):
