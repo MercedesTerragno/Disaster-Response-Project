@@ -51,6 +51,32 @@ def tokenize(text):
     return tokens
 
 
+class StartingVerbExtractor(BaseEstimator, TransformerMixin):
+    """
+    Starting Verb Extractor class
+    
+    This class extract the starting verb of a sentence,
+    creating a new feature for the ML classifier
+    """
+
+    def starting_verb(self, text):
+        sentence_list = nltk.sent_tokenize(text)
+        for sentence in sentence_list:
+            pos_tags = nltk.pos_tag(tokenize(sentence))
+            if len(pos_tags) != 0:
+                first_word, first_tag = pos_tags[0]
+                if first_tag in ['VB', 'VBP'] or first_word == 'RT':
+                    return True
+        return False
+
+    def fit(self, x, y=None):
+        return self
+
+    def transform(self, X):
+        X_tagged = pd.Series(X).apply(self.starting_verb)
+        return pd.DataFrame(X_tagged)
+    
+
 def build_model():
     
     
@@ -67,8 +93,35 @@ def build_model():
 
     cv = GridSearchCV(pipeline, cv= 2, param_grid= parameters, verbose= 3)
 
-    return cv   
+    return cv
+
+#     ### Pipeline with good results according to deployment ###
+
+#     pipeline = Pipeline([
+#         ('features', FeatureUnion([
+
+#             ('text_pipeline', Pipeline([
+#                 ('vect', CountVectorizer(tokenizer=tokenize, max_df= 0.75)),
+#                 ('tfidf', TfidfTransformer())
+#             ])),
+
+#             ('starting_verb', StartingVerbExtractor())
+#         ])),
+
+#         ('clf', MultiOutputClassifier(AdaBoostClassifier()))
+#     ])
     
+#     # parameters to grid search
+#     parameters = { 'clf__estimator__n_estimators' : [50, 60]} #, 70, 80
+    
+#     # initiating GridSearchCV method
+#     cv = GridSearchCV(pipeline, cv=2, param_grid=parameters, verbose=2, n_jobs=-1)
+
+#     return cv
+
+
+#     ### Past model tried ###
+
 #     model = AdaBoostClassifier(n_estimators= 20, learning_rate= 1.2)
 
 #     pipeline = Pipeline([
