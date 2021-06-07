@@ -16,7 +16,16 @@ from sklearn.model_selection import GridSearchCV
 from sklearn.metrics import precision_recall_fscore_support
 import pickle
 
+
 def load_data(database_filepath):
+    """
+    Input:
+        database_filepath: path to a SQLite db
+    Output:
+        X: feature DataFrame
+        Y: label DataFrame
+        category_names: 36 category labels
+    """
     engine = create_engine('sqlite:///' + database_filepath)
     df = pd.read_sql_table('messages_and_categories', engine)
 
@@ -29,6 +38,12 @@ def load_data(database_filepath):
 
 
 def tokenize(text):
+    """
+    Input:
+        text: original text for messages
+    Output:
+        clean_tokens: tokenized text for model
+    """
   
     # replace each url in text string with placeholder
     url_regex = 'http[s]?://(?:[a-zA-Z]|[0-9]|[$-_@.&+]|[!*\(\),]|(?:%[0-9a-fA-F][0-9a-fA-F]))+'
@@ -51,34 +66,14 @@ def tokenize(text):
     return tokens
 
 
-class StartingVerbExtractor(BaseEstimator, TransformerMixin):
-    """
-    Starting Verb Extractor class
-    
-    This class extract the starting verb of a sentence,
-    creating a new feature for the ML classifier
-    """
-
-    def starting_verb(self, text):
-        sentence_list = nltk.sent_tokenize(text)
-        for sentence in sentence_list:
-            pos_tags = nltk.pos_tag(tokenize(sentence))
-            if len(pos_tags) != 0:
-                first_word, first_tag = pos_tags[0]
-                if first_tag in ['VB', 'VBP'] or first_word == 'RT':
-                    return True
-        return False
-
-    def fit(self, x, y=None):
-        return self
-
-    def transform(self, X):
-        X_tagged = pd.Series(X).apply(self.starting_verb)
-        return pd.DataFrame(X_tagged)
-    
-
 def build_model():
-    
+    ''' Builds model as pipeline 
+        Inputs: 
+            None
+        Output: 
+            cv: model with best parameters found during GridSearch for 
+                pipeline consisting of nlp steps and final estimator with multioutput wrapper
+    '''
     
     model = RandomForestClassifier()
 
@@ -120,7 +115,7 @@ def build_model():
 #     return cv
 
 
-#     ### Past model tried ###
+#     ### Past models tried ###
 
 #     model = AdaBoostClassifier(n_estimators= 20, learning_rate= 1.2)
 
@@ -141,6 +136,15 @@ def build_model():
 
 
 def evaluate_model(model, X_test, Y_test, category_names):
+    ''' Makes predictions on houldout testing set and prints out a classification report for each category  
+        Inputs: 
+            model: model as an output of build_model()
+            X_test: holdout data with text messages
+            Y_test: holdout data with categories
+            category_names: list of categories' names
+        Output: None
+            
+    '''
     Y_pred = model.predict(X_test)
     
     reports= {}
@@ -157,8 +161,16 @@ def evaluate_model(model, X_test, Y_test, category_names):
 
 
 def save_model(model, model_filepath):
+    """
+    Input:
+        model: trained model
+        model_filepath: destination path
+    Output:
+        saved model as pickle file
+    """
     pickle.dump(model, open(model_filepath, 'wb'))
 
+    
 def main():
     if len(sys.argv) == 3:
         database_filepath, model_filepath = sys.argv[1:]
