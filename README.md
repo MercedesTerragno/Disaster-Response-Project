@@ -31,12 +31,13 @@ This project involves a web app where you can input a new message and get a clas
 
 ## Usage <a name="usage"></a>
  
-In a terminal navigate to the disaster-response-project and run the following commands:
-- python process_data.py disaster_messages.csv disaster_categories.csv DisasterResponse.db
-- python train_classifier.py DisasterResponse.db classifier.pkl
-- python run.py
+- In a terminal navigate to the disaster-response-project and run the following commands:
+1. `python data/process_data.py data/disaster_messages.csv data/disaster_categories.csv data/DisasterResponse.db`
+2. `python train_classifier.py DisasterResponse.db classifier.pkl`
+3. `python run.py`
 
-!!! [Falta how to run the app]
+- Go to http://0.0.0.0:3001/
+
 
 ## Acknowledgements <a name="acknowledgements"></a>
 
