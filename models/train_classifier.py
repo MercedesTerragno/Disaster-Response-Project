@@ -90,24 +90,17 @@ def build_model():
 
     return cv
 
+
 #     ### Pipeline with good results according to deployment ###
-
+        
 #     pipeline = Pipeline([
-#         ('features', FeatureUnion([
-
-#             ('text_pipeline', Pipeline([
-#                 ('vect', CountVectorizer(tokenizer=tokenize, max_df= 0.75)),
-#                 ('tfidf', TfidfTransformer())
-#             ])),
-
-#             ('starting_verb', StartingVerbExtractor())
-#         ])),
-
-#         ('clf', MultiOutputClassifier(AdaBoostClassifier()))
+#     ('vect', CountVectorizer(tokenizer=tokenize, max_df= 0.75)),
+#     ('tfidf', TfidfTransformer()),
+#     ('clf', MultiOutputClassifier(AdaBoostClassifier(), n_jobs=-1)) 
 #     ])
-    
+
 #     # parameters to grid search
-#     parameters = { 'clf__estimator__n_estimators' : [50, 60]} #, 70, 80
+#     parameters = { 'clf__estimator__n_estimators' : [50, 60, 70, 80]} #
     
 #     # initiating GridSearchCV method
 #     cv = GridSearchCV(pipeline, cv=2, param_grid=parameters, verbose=2, n_jobs=-1)
