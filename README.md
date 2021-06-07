@@ -34,7 +34,9 @@ This project involves a web app where you can input a new message and get a clas
 - In a terminal navigate to the disaster-response-project and run the following commands:
 1. `python data/process_data.py data/disaster_messages.csv data/disaster_categories.csv data/DisasterResponse.db`
 2. `python train_classifier.py DisasterResponse.db classifier.pkl`
-3. `python run.py`
+
+- Then navigate to your app's directory and run this command:
+4. `python run.py`
 
 - Go to http://0.0.0.0:3001/
 
