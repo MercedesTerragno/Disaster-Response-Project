@@ -37,7 +37,7 @@ This project involves a web app where you can input a new message and get a clas
  
 - In a terminal navigate to the disaster-response-project and run the following commands:
 1. `python data/process_data.py data/messages.csv data/categories.csv data/DisasterResponse.db`
-2. `python train_classifier.py DisasterResponse.db classifier.pkl`
+2. `python models/train_classifier.py data/DisasterResponse.db models/classifier.pkl`
 
 - Then navigate to your app's directory and run this command:
 4. `python run.py`
