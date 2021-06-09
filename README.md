@@ -31,7 +31,7 @@ This project involves a web app where you can input a new message and get a clas
 
 ## Web App Screenshot <a name="screenshot"></a>
 
-![Screenshot of Web App](screenshot.PNG)
+![](screenshot.png)
 
 ## Usage <a name="usage"></a>
  
