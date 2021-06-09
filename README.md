@@ -17,8 +17,8 @@ This project involves a web app where you can input a new message and get a clas
 
 - Data
   - process_data.py: Python script to read in data from the csv files, clean it and store it in a SQL database.
-  - disaster_messages.csv: Csv file with "id", "message", "original" and "genre" as columns.
-  - disaster_categories.csv: Csv file with "id" and "categories" as columns.
+  - messages.csv: Csv file with "id", "message", "original" and "genre" as columns.
+  - categories.csv: Csv file with "id" and "categories" as columns.
   - DisasterResponse.db: Database created by process_data.py with cleaned data.
   
 - Models
@@ -32,7 +32,7 @@ This project involves a web app where you can input a new message and get a clas
 ## Usage <a name="usage"></a>
  
 - In a terminal navigate to the disaster-response-project and run the following commands:
-1. `python data/process_data.py data/disaster_messages.csv data/disaster_categories.csv data/DisasterResponse.db`
+1. `python data/process_data.py data/messages.csv data/categories.csv data/DisasterResponse.db`
 2. `python train_classifier.py DisasterResponse.db classifier.pkl`
 
 - Then navigate to your app's directory and run this command:
