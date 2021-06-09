@@ -5,8 +5,9 @@ Machine learning pipeline to categorize messages for disaster response.
 
 1. [Project Motivation](#motivation)
 2. [File Descriptions](#files)
-3. [Usage](#usage)
-4. [Acknowledgements](#acknowledgements)
+3. [Web App Screenshot](#screenshot)
+4. [Usage](#usage)
+5. [Acknowledgements](#acknowledgements)
 
 ## Project Motivation <a name="motivation"></a>
 
@@ -28,6 +29,9 @@ This project involves a web app where you can input a new message and get a clas
   - run.py: Python script to run the Flask app.
   - templates: HTML templates for the web app.
 
+## Web App Screenshot <a name="screenshot"></a>
+
+![Screenshot of Web App](screenshot.PNG)
 
 ## Usage <a name="usage"></a>
  
