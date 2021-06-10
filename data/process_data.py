@@ -25,7 +25,7 @@ def clean_data(df):
     
     # Replace value '2' in column 'related' by '0' and drop child_alone
     categories['related'] = categories['related'].str.replace('related-2', 'related-0')
-    categories.drop(['child_alone'], axis=1, inplace=True)
+#     categories.drop(['child_alone'], axis=1, inplace=True)
     
     # Convert strings into numerical values
     for column in categories:
